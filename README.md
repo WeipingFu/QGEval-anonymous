@@ -76,10 +76,10 @@ Results of LLM-based metrics on answerability are in [data/test_answerability.xl
 [Notice] When applying metric codes, please pay attention to modifying the model file location of each metric in the code.
 
 ## Codes
-- Question Generation
+### Question Generation
 The codes for QG are in [qg](./qg). Codes for training and predicting are provided, run the code file for specific models. For example, if you want to train a T5-based QG model, run the code file [T5.py](./qg/T5.py).
 
-- Automatic Metrics
+### Automatic Metrics
 To run the metrics, modify and apply [metrics/metrics.py](./metrics/metrics.py).
 [Notice] When applying metric codes, please pay attention to modifying the model file location of each metric in the code.
 
