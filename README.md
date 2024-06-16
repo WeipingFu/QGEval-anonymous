@@ -29,7 +29,7 @@ Example of instances.
 }
 ```
 
-The average annotation scores of each QG system over eight dimensions are shown in the below table.
+The average annotation scores of each QG system over 7 dimensions are shown in the table below.
 | **Systems**                | **Flu.** | **Clar.** | **Conc.** | **Rel.** | **Cons.** | **Ans.** | **AnsC.** | **Avg.** | 
 |-----------------------------|----------|-----------|-----------|----------|-----------|----------|----------|-----------|
 | M1 - Reference              | 2.968    | 2.930     | **2.998** | 2.993    | 2.923     | 2.832    | **2.768** | **2.916** |
@@ -73,7 +73,6 @@ We implemented 15 metrics for re-evaluation, they are:
 We share the results of each metric on each generated question in [data/metric_result.xlsx](https://github.com/WeipingFu/QGEval/blob/main/data/metric_result.xlsx).
 Results of LLM-based metrics on answerability are in [data/test_answerability.xlsx](./data/test_answerability.xlsx).
 
-[Notice] When applying metric codes, please pay attention to modifying the model file location of each metric in the code.
 
 ## Codes
 ### Question Generation
@@ -81,7 +80,7 @@ The codes for QG are in [qg](./qg). Codes for training and predicting are provid
 
 ### Automatic Metrics
 To run the metrics, modify and apply [metrics/metrics.py](./metrics/metrics.py).
-[Notice] When applying metric codes, please pay attention to modifying the model file location of each metric in the code.
+[Notice] When applying metric codes, please download the required model files and modify the model file locations of each metric in the code.
 
 ## Citation
 
