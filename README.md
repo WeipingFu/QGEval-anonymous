@@ -2,7 +2,7 @@
 Resources for paper - QGEval: Benchmarking Multi-dimensional Evaluation for Question Generation
 
 ## Data
-We share the generated questions from 15 QG systems with averaged annotation scores of three annotators in [data/scores.xlsx](./data/scores.xlsx), and the instances integrated by passages are in [data/instances.json](./data/instances.json).
+We share the generated questions from 15 QG models with averaged annotation scores of three annotators in [data/scores.xlsx](./data/scores.xlsx), and the instances integrated by passages are in [data/instances.json](./data/instances.json).
 We also share the annotation result of each annotator in [data/annotation result](./data/annotation%20result).
 
 Example of instances.
@@ -29,8 +29,8 @@ Example of instances.
 }
 ```
 
-The average annotation scores of each QG system over 7 dimensions are shown in the table below.
-| **Systems**                | **Flu.** | **Clar.** | **Conc.** | **Rel.** | **Cons.** | **Ans.** | **AnsC.** | **Avg.** | 
+The average annotation scores of each QG model over 7 dimensions are shown in the table below.
+| **Models**                | **Flu.** | **Clar.** | **Conc.** | **Rel.** | **Cons.** | **Ans.** | **AnsC.** | **Avg.** | 
 |-----------------------------|----------|-----------|-----------|----------|-----------|----------|----------|-----------|
 | M1 - Reference              | 2.968    | 2.930     | **2.998** | 2.993    | 2.923     | 2.832    | **2.768** | **2.916** |
 | M2 - BART-base-finetune     | 2.958    | 2.882     | 2.898     | 2.995    | 2.923     | <u>2.732</u>  | 2.588     | 2.854 |
