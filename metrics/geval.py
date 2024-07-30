@@ -67,31 +67,29 @@ def parse_output(output):
         score = -1
     return score
 
-def Geval_one(p, q):
+def Geval_one(model, p, q):
     prompt = 'You will be given one context and one question ask about information in the context. Your task is to rate the question based on the given context on one metric.\n\n'
     prompt += 'Evaluation Criteria:\n\nAnswerability(1-5) - this dimension is about the answerability of a question based on a context. The question should be able to be answered based on the given context only. The question should be grammatically and semantically correct and cannot ask for information beyond the scope of the context, and the information asked must be consistent with the context.\n\n'
     prompt += 'Evaluation Steps:\n\n1. Read and Understand the Context: Begin by reading the provided context thoroughly to gain a comprehensive understanding of the information given. \n2. Analyze the Question: In the next step, analyze the proposed question. Check its grammar and semantics, ensuring the question is formulated correctly and understandably.\n3. Cross-reference the Context and the Question: Look back and forth between the context and the question to establish if the question is answerable using the information provided in the context only.\n4. Evaluate for Answerability: Based on the correlation between the context and the question, rate the question\'s answerability. This should be on a scale of 1 to 5, where 1 denotes that the question is not answerable based on the context, and 5 indicates that the question is entirely answerable using the provided context.\n\n'
     prompt += 'Example:\n\n'
-    # 输入
+    # input
     context = 'Context:\n\n{}\n\n'.format(p)
     question = 'Question:\n\n{}\n\n'.format(q)
     prompt += context + question
     prompt += 'Evaluation Form (scores ONLY):\n\n- Answerability:'
     # print(prompt)
-    # model = 'gpt-4-1106-preview'
-    model = 'gpt-3.5-turbo'
     message = completion_client(model, prompt)
     time.sleep(2)
     return message
 
-def Geval(data, json_path):
+def Geval(data, model, json_path):
     new_data = []
     print(len(data))
     for one in tqdm(data):
         new_one = {k:v for k,v in one.items()}
         p = one['passage']
         q = one['prediction']
-        responses = Geval_one(p, q)
+        responses = Geval_one(model, p, q)
         all_scores = [parse_output(x) for x in responses]
         all_scores = [x for x in all_scores if x!=-1]
         if len(all_scores) > 0:
@@ -200,19 +198,22 @@ def handle_response(data_path):
     wb.save(data_path)
 
 if __name__ == "__main__":
-   
+    
+    model = 'gpt-4-1106-preview'
     data = [{
         'passage': '"Bryan Charles Kocis (May 28, 1962 – January 24, 2007), also known as Bryan Phillips, was a director of gay pornographic films and founder of Cobra Video, a gay porn film studio.  Kocis was murdered at his Dallas Township, Pennsylvania home on January 24, 2007; arson was used in an attempt to disguise the circumstances of his death.  Two escorts, Harlow Cuadra and Joseph Kerekes, were charged and convicted for Kocis\' murder and subsequently given a sentence of life imprisonment without any possibility of parole.\nSchoolboy Crush (2004) is a controversial gay pornographic film directed by Bryan Kocis (under the industry name ""Bryan Phillips""), released on Cobra Video, and cast with Brent Everett and Sean Paul Lockhart under the stage name ""Brent Corrigan"".  Corrigan being underage at the time of filming led to legal actions against Phillips and the withdrawal of the film ""Schoolboy Crush"" from the Cobra Video film catalog."',
         'prediction': 'Who was convicted of murdering the director of Schoolboy Crush?'
     }]
-    # api
-    json_path = './result/json/geval-gpt3turbo-ans.json'
-    excel_path = './result/geval-gpt3turbo-anstest.xlsx'
+
+    save_json_path = './result/json/geval-gpt4-ans.json'
+    save_path = './result/geval-gpt4-anstest.xlsx'
+    # call api
+    
     # before apply, update base_url, and api_key in function completion_client
-    res = Geval(data, json_path)
+    res = Geval(data, save_json_path)
     print(res)
-    pd.DataFrame(res).to_excel(excel_path, index=False)
+    pd.DataFrame(res).to_excel(save_path, index=False)
     # handle response to score
-    handle_response(excel_path)
+    handle_response(save_path)
    
     
