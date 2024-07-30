@@ -37,15 +37,6 @@ class NLGEvaluator:
         self.refs_list = refs_list
         print('Load data success! Get {} refs, sentence count={}'.format(len(self.refs_list), len(self.hypos)))
 
-    # def get_nlgeval(self):  
-        
-    #     metrics_dict = compute_metrics(hypothesis=self.hypo_path,
-    #                            references=self.ref_path_list)
-    #     print('#'*25, 'nlg-eval result', '#'*25)
-    #     print(metrics_dict)
-    #     print()
-    #     return metrics_dict
-
     def get_bert_score(self, lang='en'):
         if self.hypos is None:
             self.__load_data()
@@ -77,9 +68,7 @@ class NLGEvaluator:
             cand_words = hypo.strip().split(' ')
             refs = [refs_one[i] for refs_one in self.refs_list]
             ref_words_list = list(map(lambda x: x.strip().split(' '), refs))
-            # print(i)
-            # print(cand_words)
-            # print(ref_words_list)
+
             one_bleu = round(sentence_bleu(ref_words_list,cand_words,smoothing_function=chencherry.method1), 4)
             bleu_list.append(one_bleu)
         print('Sentence-BLEU calculated!')
@@ -161,16 +150,3 @@ if __name__ == "__main__":
     
     os.environ["CUDA_VISIBLE_DEVICES"] = '5'
     main()
-
-# Bleu_1: 0.537177
-# Bleu_2: 0.404950
-# Bleu_3: 0.320807
-# Bleu_4: 0.256220
-# METEOR: 0.266451
-# ROUGE_L: 0.555784
-# CIDEr: 2.119157
-# SkipThoughtsCosineSimilarity: 0.879024
-# EmbeddingAverageCosineSimilarity: 0.920001
-# EmbeddingAverageCosineSimilairty: 0.920001
-# VectorExtremaCosineSimilarity: 0.626405
-# GreedyMatchingScore: 0.811177

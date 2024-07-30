@@ -1,5 +1,5 @@
 import openai
-# from openai import OpenAI
+from openai import OpenAI
 from tqdm import tqdm
 import time
 import pandas as pd
@@ -17,46 +17,12 @@ def save_json(data, save_path):
     with open(save_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False)
 
-# 旧的调用方式
-def completion_old(model, prompt, max_try=1):
-    count = 0
-    all_responses = []
-    openai.api_base = ''
-    openai.api_key = ''
-    for i in range(max_try):
-        try:
-            _response = openai.ChatCompletion.create(
-                    model=model,
-                    messages=[{"role": "system", "content": prompt}],
-                    temperature=2,
-                    max_tokens=10,
-                    top_p=1,
-                    frequency_penalty=0,
-                    presence_penalty=0,
-                    stop=None,
-                    # logprobs=40,
-                    n=20
-                )
-            # time.sleep(0.5)
-            # print('resp')
-            # print(_response)
-            all_responses = [_response['choices'][i]['message']['content'] for i in
-                                 range(len(_response['choices']))]
-            # message = response.choices[0].message.content
-            break
-        except Exception as e:
-            print(e)
-            continue
-    return all_responses
 
-def completion_client(model, prompt, max_try=1):
-    from openai import OpenAI
+def completion_client(model, prompt, max_try=3):
     client = OpenAI(
         base_url="",
         api_key=''
     )
-    count = 0
-    message = ''
     for i in range(max_try):
         try:
             response = client.chat.completions.create(
@@ -114,7 +80,7 @@ def Geval_one(p, q):
     # print(prompt)
     # model = 'gpt-4-1106-preview'
     model = 'gpt-3.5-turbo'
-    message = completion_old(model, prompt)
+    message = completion_client(model, prompt)
     time.sleep(2)
     return message
 
@@ -242,8 +208,8 @@ if __name__ == "__main__":
     # api
     json_path = './result/json/geval-gpt3turbo-ans.json'
     excel_path = './result/geval-gpt3turbo-anstest.xlsx'
+    # before apply, update base_url, and api_key in function completion_client
     res = Geval(data, json_path)
-    # print(len(res))
     print(res)
     pd.DataFrame(res).to_excel(excel_path, index=False)
     # handle response to score

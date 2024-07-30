@@ -51,7 +51,23 @@ run `pip install -r requirements.txt` to install the required packages.
         # save results
         data.to_excel(save_path, index=False)
         ```
-    - or run the code file for specific metric to calculate. For example, run `python qrel.py` to calculate QRelScore results. 
+    - or run the code file for specific metric to calculate. For example, run `python qrel.py` to calculate QRelScore results. The code file of each metric:
+        ```python
+        # metric: code file
+        BLEU/ROUGE/METEOR/BERTScore: base_evaluator.py
+        MoverScore: MoverScore.py
+        BLEURT: test_bleurt.py
+        Q-Metric: QBLEU/answerability_score.py
+        QSTS: qsts.py
+        BARTScore: BARTScore/bart_score.py
+        GPTScore: gptscore.py
+        UniEval: UniEval/unieval.py
+        QRelScore: qrel.py
+        RQUGE: RQUGE/rquge_score.py
+        GPT-zeroshot: prompt_gpt.py
+        G-Eval: geval.py
+        KDA: 
+        ```
     
 ### Evaluate Automatic Metrics
 Run `python coeff.py` to obtain the Pearson, Spearman, and Kendall correlation coefficient between the generated results and the labeled results. For detailed process, please refer to [readme of QGEval](../README.md).
